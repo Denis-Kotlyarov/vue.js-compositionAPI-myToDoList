@@ -11,14 +11,10 @@ export default {
   setup(props, { emit }) {
     const deleteToDo = (todo) => {
       emit('deleteToDo', todo.id)
-      console.log(todo)
-      console.log(todo.id)
     }
-    //Еще заранее сдела пометку для выполненной задачи
+    //Еще заранее сделал пометку для выполненной задачи
     const completedToDo = (todo) => {
       todo.completed = !todo.completed
-      emit('completedToDo')
-      console.log(todo.completed)
     }
 
     return {
@@ -30,7 +26,7 @@ export default {
 </script>
 
 <template>
-  <section class="card">
+  <section class="card" :class="{ 'has-background-success-light': todo.completed }">
     <div class="card-content">
       <div class="content columns is-mobile is-vcentered is-centered">
         <p class="column is-10-mobile">
@@ -57,5 +53,8 @@ export default {
 .completed {
   text-decoration: line-through;
   color: rgba(142, 142, 142, 0.807);
+}
+.card {
+  transition: all 0.3s;
 }
 </style>

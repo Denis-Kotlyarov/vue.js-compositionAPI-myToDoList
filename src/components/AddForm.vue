@@ -5,12 +5,8 @@ import { ref } from 'vue'
 export default {
   name: 'AddForm',
   props: {
-    placeholder: {
-      type: String
-    },
-    btn_text: {
-      type: String
-    }
+    placeholder: String,
+    btn_text: String
   },
 
   setup(props, { emit }) {
