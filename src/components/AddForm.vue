@@ -1,31 +1,23 @@
-<script>
+<script setup>
 import { v4 as uuidv4 } from 'uuid'
 import { ref } from 'vue'
 
-export default {
-  name: 'AddForm',
-  props: {
-    placeholder: String,
-    btn_text: String
-  },
+const props = defineProps({
+  placeholder: String,
+  btn_text: String
+})
 
-  setup(props, { emit }) {
-    const newToDoContent = ref('')
-    const addToDo = () => {
-      const newToDo = {
-        id: uuidv4(),
-        content: newToDoContent.value,
-        completed: false
-      }
-      emit('addToDo', newToDo)
-      newToDoContent.value = ''
-    }
+const emits = defineEmits(['addToDo'])
 
-    return {
-      addToDo,
-      newToDoContent
-    }
+const newToDoContent = ref('')
+const addToDo = () => {
+  const newToDo = {
+    id: uuidv4(),
+    content: newToDoContent.value,
+    completed: false
   }
+  emits('addToDo', newToDo)
+  newToDoContent.value = ''
 }
 </script>
 

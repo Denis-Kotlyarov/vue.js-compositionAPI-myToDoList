@@ -3,7 +3,7 @@
 import AddForm from '@/components/AddForm.vue'
 import ToDoItem from '@/components/ToDoItem.vue'
 import { reactive, watch, onMounted } from 'vue'
-import db from '@/firebase/index.js'
+//import db from '@/firebase/index.js'
 
 //Works with todos
 const todos = reactive([])

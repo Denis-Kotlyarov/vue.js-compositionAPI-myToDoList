@@ -1,27 +1,18 @@
-<script>
-export default {
-  name: 'ToDoItem',
-  props: {
-    todo: {
-      type: Object,
-      required: true
-    }
-  },
-  //Попробовал заранее сделать удаление, хотя скорее всего тут будет просто фильтрация по done - true/false а не удаление, но мало ли...
-  setup(props, { emit }) {
-    const deleteToDo = (todo) => {
-      emit('deleteToDo', todo.id)
-    }
-    //Еще заранее сделал пометку для выполненной задачи
-    const completedToDo = (todo) => {
-      todo.completed = !todo.completed
-    }
-
-    return {
-      deleteToDo,
-      completedToDo
-    }
+<script setup>
+const props = defineProps({
+  todo: {
+    type: Object,
+    required: true
   }
+})
+const emits = defineEmits(['deleteToDo'])
+//Попробовал заранее сделать удаление, хотя скорее всего тут будет просто фильтрация по done - true/false а не удаление, но мало ли...
+const deleteToDo = (todo) => {
+  emits('deleteToDo', todo.id)
+}
+//Еще заранее сделал пометку для выполненной задачи
+const completedToDo = (todo) => {
+  todo.completed = !todo.completed
 }
 </script>
 
