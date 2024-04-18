@@ -1,5 +1,4 @@
 <script setup>
-import { v4 as uuidv4 } from 'uuid'
 import { ref } from 'vue'
 
 const props = defineProps({
@@ -12,7 +11,6 @@ const emits = defineEmits(['addToDo'])
 const newToDoContent = ref('')
 const addToDo = () => {
   const newToDo = {
-    id: uuidv4(),
     content: newToDoContent.value,
     completed: false
   }

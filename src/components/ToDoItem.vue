@@ -5,7 +5,7 @@ const props = defineProps({
     required: true
   }
 })
-const emits = defineEmits(['deleteToDo'])
+const emits = defineEmits(['deleteToDo', 'completedToDo'])
 //Попробовал заранее сделать удаление, хотя скорее всего тут будет просто фильтрация по done - true/false а не удаление, но мало ли...
 const deleteToDo = (todo) => {
   emits('deleteToDo', todo.id)
@@ -13,6 +13,7 @@ const deleteToDo = (todo) => {
 //Еще заранее сделал пометку для выполненной задачи
 const completedToDo = (todo) => {
   todo.completed = !todo.completed
+  emits('completedToDo', todo)
 }
 </script>
 
