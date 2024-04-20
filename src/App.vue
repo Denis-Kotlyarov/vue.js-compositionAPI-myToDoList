@@ -10,40 +10,44 @@ import {
   doc,
   addDoc,
   deleteDoc,
-  updateDoc
+  updateDoc,
+  query,
+  orderBy
 } from 'firebase/firestore'
 import { db } from '@/firebase'
 
 //Works with todos
 const todos = reactive([])
-const todoCollRef = collection(db, 'todos')
+const todosCollRef = collection(db, 'todos')
+const todosCollQuery = query(todosCollRef, orderBy('date'))
 
 let load = true
 
 onMounted(() => {
-  onSnapshot(todoCollRef, (querySnapshot) => {
+  onSnapshot(todosCollQuery, (querySnapshot) => {
     //Обработчик моментальных снимков. Что-то вроде слушателя изменений по данному пути
     const fbTodos = []
     querySnapshot.forEach((doc) => {
       const todo = {
         id: doc.id,
         content: doc.data().content,
-        completed: doc.data().completed
+        completed: doc.data().completed,
+        date: doc.data().date
       }
       //Заносим наши документы в массив
       fbTodos.push(todo)
     })
     //Обнуляем так-как при обновление данных локальный массив дублируется
     //Переносим данные в локальный реактивный массив
-    todos.splice(0, todos.length, ...fbTodos.sort((a, b) => a.content.localeCompare(b.content)))
-    //Я не понял по какой логике он сортирует, поэтому вставил эту сортировку, худо бедно, но лучше чем было...
+    todos.splice(0, todos.length, ...fbTodos)
   })
 })
 
 const pushNewToDo = (newTodo) => {
-  addDoc(todoCollRef, {
+  addDoc(todosCollRef, {
     content: newTodo.content,
-    completed: newTodo.completed
+    completed: newTodo.completed,
+    date: Date.now()
   })
 }
 
@@ -58,7 +62,7 @@ const updateCompleted = async (todo) => {
   })
 }
 
-//Слежу за изменением todos для обновления localStorage
+//Слежу за изменением todos
 watch(
   todos,
   (newTodos) => {
